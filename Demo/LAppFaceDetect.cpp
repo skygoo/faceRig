@@ -95,8 +95,8 @@ double LAppFaceDetect::eye_open(Point2f &p1, Point2f &p2, Point2f &v11, Point2f 
 }
 
 void LAppFaceDetect::faceControl(vector<Point2f> face){
-    int div_x = face.at(16).x - face.at(0).x;
-    int div_y = face.at(16).y - face.at(0).y;
+    int div_x = face.at(16).x - face.at(0).x;  // 眼角横向距离
+    int div_y = face.at(16).y - face.at(0).y;  
     double center_x = face.at(0).x + div_x / 2.0;
     double center_y = face.at(0).y + div_y / 2.0;
     double slope = (double)(div_y) / (double)(div_x);
@@ -108,14 +108,14 @@ void LAppFaceDetect::faceControl(vector<Point2f> face){
     
     double rate = 0.5;
     // Ax+By+C/sqrt(A^2+B^2)
-    x_rotate = x_rotate * (1 - rate) + asin(diversion / distance - 0.5) * 3.14 * 40.0 * rate;
+    x_rotate = x_rotate * (1 - rate) + asin(diversion / distance - 0.5) * 3.14 * rate;
     
     // nose to eye around 1/6 head
     diversion = meter(slope, -1, bias, face.at(30).x, face.at(30).y);
     diversion = diversion + 1.0 / 6 * distance;
-    y_rotate = y_rotate * (1 - rate) + asin(diversion / distance) * 3.14 * 40.0 * rate;
+    y_rotate = y_rotate * (1 - rate) + asin(diversion / distance) * 3.14  * rate;
     
-    z_rotate = z_rotate * (1 - rate) + atan(slope) * 3.14 * 40 * rate;
+    z_rotate = z_rotate * (1 - rate) + atan(slope) * 3.14 * rate;
     
     // eye
     left_eye = eye_open(face.at(36), face.at(39), face.at(37), face.at(38), face.at(40), face.at(41), left_eye, rate);
