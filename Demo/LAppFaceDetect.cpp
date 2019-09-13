@@ -95,13 +95,13 @@ double LAppFaceDetect::eye_open(Point2f &p1, Point2f &p2, Point2f &v11, Point2f 
 }
 
 void LAppFaceDetect::faceControl(vector<Point2f> face){
-    int div_x = face.at(16).x - face.at(0).x;  // 眼角横向距离
+    int div_x = face.at(16).x - face.at(0).x;  // 眼角横向距离 右眼角16  左眼角0
     int div_y = face.at(16).y - face.at(0).y;  
     double center_x = face.at(0).x + div_x / 2.0;
-    double center_y = face.at(0).y + div_y / 2.0;
-    double slope = (double)(div_y) / (double)(div_x);
+    double center_y = face.at(0).y + div_y / 2.0;  //两眼角中点
+    double slope = (double)(div_y) / (double)(div_x); //两眼角倾斜
     double bias = center_y - slope * center_x;
-    double x_proj = (slope * (face.at(30).y - bias) + face.at(30).x) / (1 + pow(slope, 2));
+    double x_proj = (slope * (face.at(30).y - bias) + face.at(30).x) / (1 + pow(slope, 2));  //鼻尖30
     double y_proj = slope * x_proj + bias;
     double diversion = sqrt(pow(x_proj - face.at(0).x, 2) + pow(y_proj - face.at(0).y, 2));
     double distance = sqrt(pow(face.at(16).x - face.at(0).x, 2) + pow(face.at(16).y - face.at(0).y, 2));
